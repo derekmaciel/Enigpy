@@ -51,6 +51,9 @@ class Enigpy:
 
         return r1
 
+    def decode(self, c):
+        return self.encode(c)
+
 
 class Rotor():
     def __init__(self, map):

@@ -33,8 +33,12 @@ class TestEnigpy(unittest.TestCase):
     def test_encode(self):
         e = enigpy.Enigpy("I", "II", "III")
         e.set_rotors('A', 'B', 'C')
-        e.encode('A')
         self.assertEqual("C", e.encode('A'))
+
+    def test_decode(self):
+        e = enigpy.Enigpy("I", "II", "III")
+        e.set_rotors('A', 'B', 'C')
+        self.assertEqual("A", e.decode('C'))
 
 if __name__ == '__main__':
     unittest.main()
