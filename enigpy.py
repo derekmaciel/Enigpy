@@ -72,12 +72,15 @@ class Rotor():
         Once we know what contact the input pin is touching, we check the map to see which output contact is receiving
         the signal. But which output pin is touching that contact? Simple -- we do the same process but in reverse.
         """
+        # Which input contact is receiving the input signal?
         input_contact = _letter_to_num(c) + self._position
         if input_contact > 25:
             input_contact -= 25
 
+        # Which output contact is receiving the signal from the input contact?
         output_contact = self._map[input_contact]
 
+        # Which output pin is receiving the signal from the output contact?
         output_pin = _letter_to_num(output_contact) - self._position
         if output_pin < 0:
             output_pin += 25
@@ -85,15 +88,28 @@ class Rotor():
         return _num_to_letter(output_pin)
 
     def decode(self, c):
-        return None
+        """Perform reverse-encoding on the given character
+
+        This works the same way as encode() but in the reverse direction.
+        """
+        # Which output contact is currently touching the output pin?
+        output_contact = _letter_to_num(c) + self._position
+        if output_contact > 25:
+            output_contact -= 25
+
+        # Which input contact is receiving the signal from the output contact?
+        input_contact = self._map.index(_num_to_letter(output_contact))
+
+        # Which input pin is currently touching that input contact?
+        input_pin = input_contact - self._position
+
+        return _num_to_letter(input_pin)
 
     def turn(self):
         if self._position == 25:
             self._position = 0
         else:
             self._position += 1
-
-        #self._map = self._map[1:] + self._map[:1]
 
     def set_position(self, new_position):
         index = _letter_to_num(new_position)
