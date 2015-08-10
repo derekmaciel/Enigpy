@@ -20,6 +20,14 @@ class TestRotor(unittest.TestCase):
         r.turn()
         self.assertEqual('K', r.encode('A'))
 
+    def test_set_position(self):
+        r = enigpy.Rotor('I')
+        r.set_position("C")
+        self.assertEqual(2, r._position)
+
+        r.set_position("A")
+        self.assertEqual(0, r._position)
+
 
 if __name__ == '__main__':
     unittest.main()
