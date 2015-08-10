@@ -35,6 +35,12 @@ class TestEnigpy(unittest.TestCase):
         e.set_rotors('A', 'B', 'C')
         self.assertEqual("C", e.encode('A'))
 
+        e.set_rotors('A', 'A', 'A')
+        self.assertEqual("B", e.encode('A'))
+
+        e.set_rotors('Z', 'Y', 'X')
+        self.assertEqual("H", e.encode('A'))
+
     def test_decode(self):
         e = enigpy.Enigpy("I", "II", "III")
         e.set_rotors('A', 'B', 'C')

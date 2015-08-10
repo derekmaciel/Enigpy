@@ -78,7 +78,7 @@ class Rotor():
         # Which input contact is receiving the input signal?
         input_contact = _letter_to_num(c) + self._position
         if input_contact > 25:
-            input_contact -= 25
+            input_contact -= 26
 
         # Which output contact is receiving the signal from the input contact?
         output_contact = self._map[input_contact]
@@ -86,7 +86,7 @@ class Rotor():
         # Which output pin is receiving the signal from the output contact?
         output_pin = _letter_to_num(output_contact) - self._position
         if output_pin < 0:
-            output_pin += 25
+            output_pin += 26
 
         return _num_to_letter(output_pin)
 
@@ -98,7 +98,7 @@ class Rotor():
         # Which output contact is currently touching the output pin?
         output_contact = _letter_to_num(c) + self._position
         if output_contact > 25:
-            output_contact -= 25
+            output_contact -= 26
 
         # Which input contact is receiving the signal from the output contact?
         input_contact = self._map.index(_num_to_letter(output_contact))
