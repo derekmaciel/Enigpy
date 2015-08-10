@@ -93,7 +93,7 @@ class Rotor():
         else:
             self._position += 1
 
-        self._map = self._map[1:] + self._map[:1]
+        #self._map = self._map[1:] + self._map[:1]
 
     def set_position(self, new_position):
         index = _letter_to_num(new_position)
