@@ -28,18 +28,27 @@ def _num_to_letter(n):
 
 class Enigpy:
     def __init__(self, r3, r2, r1):
-        self._rotor3 = Rotor(ROTORS[r3]['map'])
-        self._rotor2 = Rotor(ROTORS[r2]['map'])
-        self._rotor1 = Rotor(ROTORS[r1]['map'])
-        self._reflector = Rotor(REFLECTORS['B']) # A reflector is basically a rotor that never rotates
+        self._rotor3 = Rotor(ROTORS[r3]['map'], ROTORS[r3]['turnover'])
+        self._rotor2 = Rotor(ROTORS[r2]['map'], ROTORS[r2]['turnover'])
+        self._rotor1 = Rotor(ROTORS[r1]['map'], ROTORS[r1]['turnover'])
+        self._reflector = Rotor(REFLECTORS['B'], 'Z') # A reflector is basically a rotor that never rotates
 
     def set_rotors(self, r3, r2, r1):
         self._rotor3.set_position(r3)
         self._rotor2.set_position(r2)
         self._rotor1.set_position(r1)
 
-    def encode(self, c):
+    def _turn(self):
         self._rotor1.turn()
+
+        if self._rotor1.trigger_turnover():
+            self._rotor2.turn()
+
+            if self._rotor2.trigger_turnover():
+                self._rotor3.turn()
+
+    def encode(self, c):
+        self._turn()
 
         r1 = self._rotor1.encode(c)
         r2 = self._rotor2.encode(r1)
@@ -70,9 +79,10 @@ class Enigpy:
 
 
 class Rotor():
-    def __init__(self, map):
+    def __init__(self, map, turnover):
         self._position = 0
         self._map = map
+        self.turnover = turnover
 
     def encode(self, c):
         """Encode the given character based on the configuration and position of the current rotor.
@@ -132,3 +142,9 @@ class Rotor():
         index = _letter_to_num(new_position)
         while self._position != index:
             self.turn()
+
+    def read_indicator(self):
+        return _num_to_letter(self._position)
+
+    def trigger_turnover(self):
+        return self.read_indicator() == self.turnover

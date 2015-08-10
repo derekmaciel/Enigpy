@@ -8,20 +8,20 @@ import enigpy
 
 class TestRotor(unittest.TestCase):
     def test_encode(self):
-        r = enigpy.Rotor('BDFHJLCPRTXVZNYEIWGAKMUSQO')
+        r = enigpy.Rotor('BDFHJLCPRTXVZNYEIWGAKMUSQO', 'W')
         self.assertEqual('F', r.encode('C'))
 
     def test_decode(self):
-        r = enigpy.Rotor('BDFHJLCPRTXVZNYEIWGAKMUSQO')
+        r = enigpy.Rotor('BDFHJLCPRTXVZNYEIWGAKMUSQO', 'W')
         self.assertEqual('C', r.decode('F'))
 
     def test_turn(self):
-        r = enigpy.Rotor('BDFHJLCPRTXVZNYEIWGAKMUSQO')
+        r = enigpy.Rotor('BDFHJLCPRTXVZNYEIWGAKMUSQO', 'W')
         r.turn()
         self.assertEqual('G', r.encode('C'))
 
     def test_set_position(self):
-        r = enigpy.Rotor('BDFHJLCPRTXVZNYEIWGAKMUSQO')
+        r = enigpy.Rotor('BDFHJLCPRTXVZNYEIWGAKMUSQO', 'W')
         r.set_position("C")
         self.assertEqual(2, r._position)
 
