@@ -8,26 +8,33 @@ import enigpy
 
 class TestRotor(unittest.TestCase):
     def test_encode(self):
-        r = enigpy.Rotor('I')
-        self.assertEqual('E', r.encode('A'))
+        r = enigpy.Rotor('BDFHJLCPRTXVZNYEIWGAKMUSQO')
+        self.assertEqual('F', r.encode('C'))
 
     def test_decode(self):
-        r = enigpy.Rotor('I')
-        self.assertEqual('A', r.decode('E'))
+        r = enigpy.Rotor('BDFHJLCPRTXVZNYEIWGAKMUSQO')
+        self.assertEqual('C', r.decode('F'))
 
     def test_turn(self):
-        r = enigpy.Rotor('I')
+        r = enigpy.Rotor('BDFHJLCPRTXVZNYEIWGAKMUSQO')
         r.turn()
-        self.assertEqual('K', r.encode('A'))
+        self.assertEqual('G', r.encode('C'))
 
     def test_set_position(self):
-        r = enigpy.Rotor('I')
+        r = enigpy.Rotor('BDFHJLCPRTXVZNYEIWGAKMUSQO')
         r.set_position("C")
         self.assertEqual(2, r._position)
 
         r.set_position("A")
         self.assertEqual(0, r._position)
 
+
+class TestEnigpy(unittest.TestCase):
+    def test_encode(self):
+        e = enigpy.Enigpy("I", "II", "III")
+        e.set_rotors('A', 'B', 'C')
+        e.encode('A')
+        self.assertEqual("C", e.encode('A'))
 
 if __name__ == '__main__':
     unittest.main()
