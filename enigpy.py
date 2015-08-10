@@ -63,6 +63,9 @@ class Enigpy:
     def decode(self, c):
         return self.encode(c)
 
+    def decode_string(self, s):
+        return self.encode_string(s)
+
     def encode_string(self, s):
         ret = ""
 
