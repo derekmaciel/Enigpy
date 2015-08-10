@@ -54,6 +54,20 @@ class Enigpy:
     def decode(self, c):
         return self.encode(c)
 
+    def encode_string(self, s):
+        ret = ""
+
+        for c in s:
+            if c == ' ' or c == '.' or c == '!' or c == '?':
+                ret += c
+            else:
+                if c.isupper():
+                    ret += self.encode(c)
+                else:
+                    ret += self.encode(c.upper()).lower()
+
+        return ret
+
 
 class Rotor():
     def __init__(self, map):

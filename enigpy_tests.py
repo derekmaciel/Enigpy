@@ -46,5 +46,17 @@ class TestEnigpy(unittest.TestCase):
         e.set_rotors('A', 'B', 'C')
         self.assertEqual("A", e.decode('C'))
 
+    def test_encode_string(self):
+        e = enigpy.Enigpy("I", "II", "III")
+        e.set_rotors('A', 'A', 'A')
+        self.assertEqual("Ilbda", e.encode_string('Hello'))
+
+    def test_turnover(self):
+        e = enigpy.Enigpy("I", "II", "III")
+        e.set_rotors('M', 'C', 'K')
+        decoded = "This text is long enough to force a turnover"
+        encoded = "Apjo uyhl pi bwhx lhqhzn en hikam o gqaautnv"
+        self.assertEqual(encoded, e.encode_string(decoded))
+
 if __name__ == '__main__':
     unittest.main()
